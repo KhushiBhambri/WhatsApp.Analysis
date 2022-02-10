@@ -16,7 +16,8 @@ def Reset_User(x):
         return x
     
 def  processText(data):
-    pattern = '\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\W{0,1}\w{0,2}\s-\s'
+    pattern = '\n\d{1,2}/\d{1,2}/\d{2,4},\s\d{1,2}:\d{2}\W{0,1}\w{0,2}\s-\s'
+
     messages = re.split(pattern,data)[1:]
     dates=re.findall(pattern[:-3],data)
     
@@ -26,18 +27,17 @@ def  processText(data):
     df['Messages']= df['Messages'].apply(lambda x: split_user(x)[1][:-1])    
     df['User']=df['User'].apply(lambda x: Reset_User(x))
     
+    df['Date']=df['Date'].apply(lambda x: x[1:-3])
     df['Datetime']=pd.to_datetime(df['Date'])
     df['Date']=df['Date'].apply(lambda x: x.split(', ')[0])
     
-    mfirst=0
     dfirst=0
     for d in dates:
         x=d.split('/',2)[0:2]
         if(int(x[0])>12):
             dfirst=1
             break
-        if(int(x[1])>12):
-            mfirst=1
+        elif(int(x[1])>12):
             break
     
     if(dfirst):
