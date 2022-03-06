@@ -8,6 +8,6 @@ pandas
 emoji
 
 
-google-transliteration
-googletrans==4.0.0rc1
-langid
+# google-transliteration
+# googletrans==4.0.0rc1
+# langid
