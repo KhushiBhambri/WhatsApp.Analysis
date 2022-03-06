@@ -22,7 +22,7 @@ def fetch_stats(user,df):
     for message in user_message:
         if(message=="This message was deleted" or message=="You deleted this message"):
           deleted+=1
-        elif(message!="<Media omitted>"):
+        elif(message!="<Media omitted>" and message!="image omitted" and message!="sticker omitted"):
           user_words.extend(message.split())
         else:
            media+=1

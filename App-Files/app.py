@@ -17,22 +17,31 @@ st.markdown('<h6 style="text-align: center;">Browse and Select Chat files in the
 data=""
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
+    gif= dataCleaning.Loading('gifs/Veggie.gif')
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
-    df = dataCleaning.processText(data)
+    # android=st.radio("Chat Exported from: ",['Android','Iphone'])
+    android='Android'
+    df = dataCleaning.processText(data,android=="Android")
 
 
+ 
 # file = open('Group1.txt','r',encoding='utf-8')
 # data=file.read()
 # df = dataCleaning.processText(data)
 
 
 #  st.dataframe(df)
-if st.sidebar.button("Show Chat"):
+showChat=0
+if st.sidebar.checkbox("Show Chat"):
+    showChat= not showChat
+
+if(showChat):
     if(data=="" or df.shape[0]==0):
         st.markdown('<p style="color:{};text-align:center;">Please Upload a Chat File to Continue!</p>'.format( subheadcolor),unsafe_allow_html=True)
     else:
         st.text(data)
+        
 
 # if st.sidebar.button("Show Analysis"):  
 if(data!=""):
@@ -49,7 +58,9 @@ if(data!=""):
         user = st.sidebar.selectbox("Show analysis of: ",listusers)
 
         messages,words,media,deleted,links= analysis.fetch_stats(user,df) 
-        emojies=analysis.MostCommonEmojies(user,df)     
+        emojies=analysis.MostCommonEmojies(user,df)  
+        gif.empty()   
+        
         if(user!="Overall Analysis"):
             st.markdown('<h2 style="color:{}; text-align: center;">Top Statistics of {}</h2>'.format(pcolor,user),unsafe_allow_html=True)
         else:
@@ -240,6 +251,14 @@ if(data!=""):
 # st.image('anime1.jpg')
 
 
+
+# * LOADING GIf
+# start_execution = st.button('Run model')
+# if start_execution:
+#     gif_runner = st.image(gif_path)
+#     result = run_model(args)
+#     gif_runner.empty()
+#     display_output(result)
 
 
 
