@@ -17,7 +17,7 @@ st.markdown('<h6 style="text-align: center;">Browse and Select Chat files in the
 data=""
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
-    gif= dataCleaning.Loading('gifs/Veggie.gif')
+    gif= dataCleaning.Loading('gifs/gify.gif')
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
     # android=st.radio("Chat Exported from: ",['Android','Iphone'])
@@ -33,10 +33,8 @@ if uploaded_file is not None:
 
 #  st.dataframe(df)
 showChat=0
-if st.sidebar.checkbox("Show Chat"):
-    showChat= not showChat
-
-if(showChat):
+expander = st.expander("Show Chat")
+with expander:
     if(data=="" or df.shape[0]==0):
         st.markdown('<p style="color:{};text-align:center;">Please Upload a Chat File to Continue!</p>'.format( subheadcolor),unsafe_allow_html=True)
     else:
