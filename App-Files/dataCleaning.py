@@ -4,7 +4,11 @@ import streamlit as st
 
 def Loading(img):
     # st.markdown('',unsafe_allow_html=True)
-    gif=st.image(img)
+    # gif=st.image('gifs/gify.gif',width=600)
+    gif=st.empty()
+    a,b,c=gif.columns([1,2.5,1])
+    with b:
+        st.image('gifs/gify.gif')
     return gif
 
 

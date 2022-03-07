@@ -12,11 +12,12 @@ headcolor="#52BD78"
 # pcolor=st.color_picker('Pick a color')
 # st.image('anime1.jpg')
 st.markdown('<h1 style="color:{};text-align: center;font-size: 42px;">WhatsApp Chat Analysis</h1>'.format(pcolor),unsafe_allow_html=True)
-st.markdown('<h6 style="text-align: center;">Browse and Select Chat files in the Sidebar to start!</h6> ',unsafe_allow_html=True)
+statement=st.markdown('<h6 style="text-align: center;">Browse and Select Chat files in the Sidebar to start!</h6> ',unsafe_allow_html=True)
 
 data=""
 uploaded_file = st.sidebar.file_uploader("Choose a file")
 if uploaded_file is not None:
+    statement.empty()
     gif= dataCleaning.Loading('gifs/gify.gif')
     bytes_data = uploaded_file.getvalue()
     data = bytes_data.decode("utf-8")
