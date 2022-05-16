@@ -5,6 +5,7 @@ import emoji
 import dataCleaning
 import pandas as pd
 import calendar
+import numpy as np
 extract = URLExtract()
 
 def fetch_stats(user,df):
@@ -62,10 +63,9 @@ def MostCommonWords(user,df,links):
   user_data['Messages'] = user_data['Messages'].apply(lambda x : dataCleaning.Remove_StopWords(x,links))
   user_data = user_data[user_data['Messages']!=""]
   wc = WordCloud(collocations=False,width=400,height=300,min_font_size=5,background_color="white")
-  words= user_data["Messages"].str.cat(sep=" ")
-  df_wc = wc.generate(words)
-  words=words.split()
-  mostCommonWords=pd.DataFrame(Counter(words).most_common(20),columns=['Word','Usage'])
+  combWords= user_data["Messages"].str.cat(sep=" ")
+  df_wc = wc.generate(combWords)
+  mostCommonWords=pd.DataFrame(Counter(combWords.split()).most_common(20),columns=['Word','Usage'])
   return df_wc,mostCommonWords 
 
 def MostCommonEmojies(user,df):
@@ -150,7 +150,21 @@ def Activitymaps(df,user):
   return weekdf,monthsdf,Perioddf
 
 
-
-
+def search(uWord,df):
+  Chat=[]
+  User=[]
+  words=[x.split() for x in df['Messages']]
+  for i in range(0,df.shape[0]):
+      words[i]=list(map(lambda x:x.lower(),words[i]))
+      if uWord.lower() in words[i]:
+        # Chat+=(df.loc[i]['User']+" : "+df.loc[i]['Messages']+"\n")
+        User.append(df.loc[i]['User'])
+        Chat.append(df.loc[i]['Messages'])
+  data=pd.DataFrame({'User':User,'Message':Chat})
+        
+  return data
+ 
+ 
+            
 
 

@@ -85,7 +85,7 @@ def  processText(data,android):
     df['Minute'] = df['Datetime'].dt.minute
     
     df.drop('Datetime',axis='columns')
-   
+    df=df.dropna()
     return df
 
 
